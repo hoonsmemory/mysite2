@@ -24,7 +24,7 @@ public class DeleteAction implements Action {
 		
 		new GuestbookDao().delete(vo);
 		
-		WebUtils.forward(request, response, "/WEB-INF/views/guestbook/listform.jsp");	
+		WebUtils.forward(request, response, "/guestbook?a=listform");	
 	}
 
 }

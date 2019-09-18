@@ -26,7 +26,8 @@ public class InsertAction implements Action {
 		
 		new GuestbookDao().insert(vo);
 		
-		WebUtils.forward(request, response, "/WEB-INF/views/guestbook/listform.jsp");
+		WebUtils.forward(request, response, "/guestbook?a=listform");
+		
 
 	}
 
