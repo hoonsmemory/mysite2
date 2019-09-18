@@ -1,5 +1,7 @@
 package kr.co.itcen.mysite.action.guestbook;
 
+import java.lang.reflect.Constructor;
+
 import kr.co.itcen.mysite.action.main.MainAction;
 import kr.co.itcen.mysite.action.user.JoinAction;
 import kr.co.itcen.mysite.action.user.JoinFormAction;
@@ -17,7 +19,12 @@ public class GuestbookActionFactory extends ActionFactory {
 	@Override
 	public Action getAction(String actionName) {
 	Action action = null;
-		
+	
+		//String className = actionName + "Action()";
+		//Class<?> clazz = Class.forName(className);
+		//Constructor<?> ctor = clazz.getConstructor(String.class);
+		//Object object = ctor.newInstance(new Object[] { ctorArgument });
+	
 		if("listform".equals(actionName)) {
 			action = new ListFormAction();
 		} else if("insert".equals(actionName)) {
