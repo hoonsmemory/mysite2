@@ -53,7 +53,7 @@ public class UpdateAction implements Action {
 		}
 		
 	
-//		WebUtils.forward(request, response, "/WEB-INF/views/user/updateform.jsp");
+		//WebUtils.forward(request, response, "/WEB-INF/views/user/updateform.jsp");
 		WebUtils.redirect(request, response, request.getContextPath() + "/user?a=updateform");
 	}
 

@@ -33,6 +33,13 @@
 					<fieldset>
 						<legend>성별</legend>
 						<c:choose>
+							<c:when test="${requestScope.result == 'fail'}">
+								<p>
+									로그인이 실패 했습니다.
+								</p>
+							</c:when>
+						</c:choose>
+						<c:choose>
 							<c:when test="${userVo.gender == 'female'}">
 								<label>여</label> <input type="radio" name="gender" value="female" checked="checked">
 								<label>남</label> <input type="radio" name="gender" value="male">
