@@ -30,25 +30,23 @@ public class UpdateAction implements Action {
 			return;
 		}
 		
+		
 		String name = request.getParameter("name");
 		String gender = request.getParameter("gender");
 		String password = request.getParameter("password");
-		
-		
+				
 		if("".equals(password)) {
 			new UserDao().update(authUser.getNo(), name, gender);
 			
 			UserVo userVo = new UserDao().get(authUser.getNo());		
 			request.setAttribute("userVo", userVo);
-			
 			authUser.setName(name);
 
 		} else {
 			new UserDao().update(authUser.getNo(), name, password, gender);
 			
 			UserVo userVo = new UserDao().get(authUser.getNo());		
-			request.setAttribute("userVo", userVo);
-			
+			request.setAttribute("userVo", userVo);	
 			authUser.setName(name);
 		}
 		

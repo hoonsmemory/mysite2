@@ -14,8 +14,8 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="" method="post">
-					<input type="text" id="kwd" name="kwd" value="">
+				<form id="search_form" action="<%=request.getContextPath()%>/board?a=search" method="post">
+					<input type="text" id="kwd" name="text" value="제목으로만 찾기 가능">
 					<input type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
@@ -32,19 +32,31 @@
 						<td>${status.count }</td>
 						<c:choose>
 							<c:when test="${vo.state eq 'y'}">
-							<td style ='padding-left:${50*1 }px'><img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'/><a href="${pageContext.servletContext.contextPath }/board?a=viewform&titleNo=${vo.no }&boardUserNo=${vo.user_no}">[새글] ${vo.title }</a></td>
+							<td><a href="${pageContext.servletContext.contextPath }/board?a=viewform&titleNo=${vo.no }&boardUserNo=${vo.user_no}">[새글] ${vo.title }</a></td>	
+							<td >${vo.user_name }</td>
+							<td>${vo.hit }</td>
+							<td>${vo.reg_date }</td>
+							<c:if test="${vo.user_no eq userNo}">
+							<td><a href="${pageContext.servletContext.contextPath }/board?a=delete&no=${vo.no }" class="del">삭제</a></td>
+							</c:if>
 							</c:when>
 							<c:when test="${vo.state eq 'u'}">
-							<td style ='padding-left:${50*1 }px'><img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'/><a href="${pageContext.servletContext.contextPath }/board?a=viewform&titleNo=${vo.no }&boardUserNo=${vo.user_no}">[수정] ${vo.title }</a></td>
+							<td style ='padding-left:${50*1 }px'><a href="${pageContext.servletContext.contextPath }/board?a=viewform&titleNo=${vo.no }&boardUserNo=${vo.user_no}">[수정] ${vo.title }</a></td>
+							<td >${vo.user_name }</td>
+							<td>${vo.hit }</td>
+							<td>${vo.reg_date }</td>
+							<c:if test="${vo.user_no eq userNo}">
+							<td><a href="${pageContext.servletContext.contextPath }/board?a=delete&no=${vo.no }" class="del">삭제</a></td>
+							</c:if>							
 							</c:when>
 							<c:when test="${vo.state eq 'n'}">
-							<td style ='padding-left:${50*1 }px'><img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'/><a href="${pageContext.servletContext.contextPath }/board?a=viewform&titleNo=${vo.no }&boardUserNo=${vo.user_no}">[삭제글]</a></td>
+							<td>[삭제글]</td>
+							<td >${vo.user_name }</td>
+							<td>${vo.hit }</td>
+							<td>${vo.reg_date }</td>
+							<td></td>
 							</c:when>
 						</c:choose>
-						<td >${vo.user_name }</td>
-						<td>${vo.hit }</td>
-						<td>${vo.reg_date }</td>
-						<td><a href="${pageContext.servletContext.contextPath }/board?a=delete&no=${vo.no }" class="del">삭제</a></td>
 					</tr>
 					</c:forEach>
 				

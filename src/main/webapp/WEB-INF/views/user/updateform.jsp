@@ -1,10 +1,10 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@page import="kr.co.itcen.mysite.dao.UserDao"%>
 <%@page import="kr.co.itcen.web.WebUtils"%>
 <%@page import="kr.co.itcen.mysite.vo.UserVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
- 	UserVo userVo = (UserVo)request.getAttribute("userVo");
-%>
 
 <!DOCTYPE html>
 <html>
@@ -32,23 +32,14 @@
 					
 					<fieldset>
 						<legend>성별</legend>
-						<c:choose>
-							<c:when test="${requestScope.result == 'fail'}">
-								<p>
-									로그인이 실패 했습니다.
-								</p>
-							</c:when>
-						</c:choose>
-						<c:choose>
-							<c:when test="${userVo.gender == 'female'}">
+							<c:if test="${userVo.gender eq 'female' }">
 								<label>여</label> <input type="radio" name="gender" value="female" checked="checked">
 								<label>남</label> <input type="radio" name="gender" value="male">
-							</c:when>
-							<c:otherwise>
+							</c:if>
+							<c:if test="${userVo.gender eq 'male' }">
 								<label>여</label> <input type="radio" name="gender" value="female" >
 								<label>남</label> <input type="radio" name="gender" value="male" checked="checked">
-							</c:otherwise>
-						</c:choose>
+							</c:if>
 					</fieldset>
 					
 					<input type="submit" value="수정하기">

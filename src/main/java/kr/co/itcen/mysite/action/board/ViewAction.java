@@ -13,7 +13,7 @@ public class ViewAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
 		
 		WebUtils.forward(request, response, "WEB-INF/views/board/viewform.jsp");
 	}

@@ -16,8 +16,7 @@ public class ModifyFromAction implements Action {
 		request.setAttribute("title", request.getParameter("title"));
 		request.setAttribute("contents", request.getParameter("contents"));
 		request.setAttribute("titleNo", request.getParameter("titleNo"));		
-		
-		System.out.println("????");
+
 		WebUtils.forward(request, response, "WEB-INF/views/board/modifyform.jsp");
 
 	}

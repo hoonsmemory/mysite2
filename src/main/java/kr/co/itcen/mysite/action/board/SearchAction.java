@@ -14,7 +14,7 @@ import kr.co.itcen.mysite.vo.UserVo;
 import kr.co.itcen.web.WebUtils;
 import kr.co.itcen.web.mvc.Action;
 
-public class ListFormAction implements Action {
+public class SearchAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -27,9 +27,9 @@ public class ListFormAction implements Action {
 			request.setAttribute("userNo", authUser.getNo());
 		}
 		
-		List<BoardVo> list = new BoardDao().getList();
+		String text = request.getParameter("text");
+		List<BoardVo> list = new BoardDao().getList(text);
 		request.setAttribute("list", list);
-		
 		
 		WebUtils.forward(request, response, "WEB-INF/views/board/listform.jsp");
 	}

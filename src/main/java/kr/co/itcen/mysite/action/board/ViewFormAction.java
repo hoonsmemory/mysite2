@@ -27,12 +27,15 @@ public class ViewFormAction implements Action {
 		}
 			
 		
-		String titleNo = request.getParameter("titleNo");
+
 		String boardUserNo = request.getParameter("boardUserNo");
-		
 		request.setAttribute("boardUserNo", boardUserNo);
 		
+		String titleNo = request.getParameter("titleNo");
 		BoardVo boardVo = new BoardDao().getBoard(Long.parseLong(titleNo));
+		
+		BoardVo hitCount = new BoardDao().getBoardHit(Long.parseLong(titleNo));
+		new BoardDao().updateHit(hitCount.getHit() + 1 ,Long.parseLong(titleNo));
 		
 		request.setAttribute("boardVo", boardVo);
 

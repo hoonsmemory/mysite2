@@ -31,7 +31,6 @@ public class UpdateFormAction implements Action {
 			return;
 		}
 		
-		//System.out.println(authUser.getNo());
 		UserVo userVo = new UserDao().get(authUser.getNo());
 		request.setAttribute("userVo", userVo);
 		

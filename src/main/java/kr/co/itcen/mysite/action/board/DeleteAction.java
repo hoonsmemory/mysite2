@@ -15,11 +15,10 @@ public class DeleteAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String no = request.getParameter("no");
-		System.out.println(no);
 		
 		new BoardDao().delete(Long.parseLong(no));
 		
-		
+		WebUtils.forward(request, response, "/board?a=default");
 	}
 
 }
