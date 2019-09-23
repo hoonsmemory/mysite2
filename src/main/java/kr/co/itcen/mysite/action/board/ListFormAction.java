@@ -27,6 +27,10 @@ public class ListFormAction implements Action {
 			request.setAttribute("userNo", authUser.getNo());
 		}
 		
+		int pageCountAll = new Paging().makeLastPageNum(); //페이지 수 
+		
+		System.out.println(pageCountAll);
+		
 		List<BoardVo> list = new BoardDao().getList();
 		request.setAttribute("list", list);
 		
