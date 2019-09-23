@@ -51,15 +51,15 @@ public class Paging {
     }
 
     // 검색을 했을 때 총 페이지의 마지막 번호
-    public void makeLastPageNum(String kwd) {
+    public int makeLastPageNum(String kwd) {
     	BoardDao dao = new BoardDao();
         Long total = dao.getCount(kwd);
 
         if( total % pageCount == 0 ) {
-            lastPageNum = (int)Math.floor(total/pageCount);
+            return lastPageNum = (int)Math.floor(total/pageCount);
         }
         else {
-            lastPageNum = (int)Math.floor(total/pageCount) + 1;
+        	return lastPageNum = (int)Math.floor(total/pageCount) + 1;
         }
     }
 }

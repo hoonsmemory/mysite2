@@ -23,6 +23,7 @@ public class ViewFormAction implements Action {
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		
 		if(authUser != null) {
+			request.setAttribute("loginO", "loginO");
 			request.setAttribute("authUserNo", authUser.getNo());
 		}
 			
@@ -31,9 +32,11 @@ public class ViewFormAction implements Action {
 		String boardUserNo = request.getParameter("boardUserNo");
 		request.setAttribute("boardUserNo", boardUserNo);
 		
+		//해당 타이틀 번호의 데이터 가져오기
 		String titleNo = request.getParameter("titleNo");
 		BoardVo boardVo = new BoardDao().getBoard(Long.parseLong(titleNo));
 		
+		//조회수 증가
 		BoardVo hitCount = new BoardDao().getBoardHit(Long.parseLong(titleNo));
 		new BoardDao().updateHit(hitCount.getHit() + 1 ,Long.parseLong(titleNo));
 		

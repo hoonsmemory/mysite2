@@ -27,11 +27,29 @@ public class ListFormAction implements Action {
 			request.setAttribute("userNo", authUser.getNo());
 		}
 		
-		int pageCountAll = new Paging().makeLastPageNum(); //페이지 수 
 		
-		System.out.println(pageCountAll);
-		
-		List<BoardVo> list = new BoardDao().getList();
+		//페이징 처리===============================================================
+		int cCount = 0;
+		if(request.getParameter("cCount") == null || cCount < 0) {
+			cCount = 1;
+		} else {
+			cCount = Integer.parseInt(request.getParameter("cCount"));
+		}
+
+		Paging p = new Paging();
+		int pageCountAll = new Paging().makeLastPageNum();		
+		System.out.println(cCount);
+		p.makeBlock(cCount);
+		int blockStartNum = p.getBlockStartNum();
+		int blockLastNum = p.getBlockLastNum();
+        
+		request.setAttribute("startnum", blockStartNum);
+		request.setAttribute("lastnum", blockLastNum);
+		request.setAttribute("page", pageCountAll);
+		request.setAttribute("cCount", cCount);
+		// =====================================================================
+			
+		List<BoardVo> list = new BoardDao().getList(cCount);
 		request.setAttribute("list", list);
 		
 		

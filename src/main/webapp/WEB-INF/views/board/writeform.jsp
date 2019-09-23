@@ -8,15 +8,24 @@
 <head>
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="<%=request.getContextPath()%>/assets/css/board.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.servletContext.contextPath }/assets/css/board.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="container">
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="<%=request.getContextPath() %>/board">
+				<form class="board-form" method="post" action="${pageContext.servletContext.contextPath }/board">
+					<c:if test="${write eq 'write' }">
 					<input type = "hidden" name = "a" value="write">
+					</c:if>
+					<c:if test="${write eq 'reply' }">
+					<input type = "hidden" name = "a" value="boardreply">
+					<input type = "hidden" name = "g_no" value="${g_no }">
+					<input type = "hidden" name = "o_no" value="${o_no }">
+					<input type = "hidden" name = "depth" value="${depth }">	
+														
+					</c:if>
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글쓰기</th>

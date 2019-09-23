@@ -9,7 +9,7 @@
 <head>
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="<%=request.getContextPath()%>/assets/css/board.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.servletContext.contextPath }/assets/css/board.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="container">
@@ -35,6 +35,9 @@
 				</table>
 				<div class="bottom">
 					<a href="${pageContext.servletContext.contextPath }/board?a=listform">글목록</a>
+					<c:if test="${loginO eq 'loginO'}">
+					<a href="${pageContext.servletContext.contextPath }/board?a=boardreplyform&g_no=${boardVo.g_no }&o_no=${boardVo.o_no }&depth=${boardVo.depth }">답글달기</a>
+				    </c:if>
 				    <c:if test="${boardUserNo eq authUserNo}">
 					<a href="${pageContext.servletContext.contextPath }/board?a=modifyform&title=${boardVo.title }&contents=${fn:replace(boardVo.contents,pageScope.newline, '<br>')}&titleNo=${boardVo.no } ">글수정</a>
 					</c:if>

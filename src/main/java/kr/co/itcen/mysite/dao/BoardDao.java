@@ -85,12 +85,78 @@ public class BoardDao {
 		return result;		
 	}
 	
-	public List<BoardVo> getList() {
+	public Boolean boardReply(BoardVo vo) {
+		Boolean result = false;
+		
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = getConnection();
+			
+			String sql1 = "update board set o_no = (o_no + 1) where g_no=? and o_no > ?";
+			pstmt = connection.prepareStatement(sql1);
+			pstmt.setLong(1, vo.getG_no());
+			pstmt.setLong(2, vo.getO_no());
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			
+			String sql2 = "insert into board values(null, ?, ?, 0, now(), ?, (? + 1), (? + 1), ?,'y')";
+			
+			pstmt = connection.prepareStatement(sql2);		
+			pstmt.setString(1, vo.getTitle());
+			pstmt.setString(2, vo.getContents());
+			pstmt.setLong(3, vo.getG_no());
+			pstmt.setLong(4, vo.getO_no());
+			pstmt.setLong(5, vo.getDepth());
+			pstmt.setLong(6, vo.getUser_no());
+			int count = pstmt.executeUpdate();
+			
+			result = (count == 1);
+			
+			stmt = connection.createStatement();
+			rs = stmt.executeQuery("select last_insert_id()");
+			if(rs.next()) {
+				Long no = rs.getLong(1);
+				vo.setNo(no);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if(rs != null) {
+					rs.close();
+				}
+				if(stmt != null) {
+					stmt.close();
+				}
+				
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				
+				if(connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;		
+	}	
+	public List<BoardVo> getList(int cCount) {
 		List<BoardVo> result = new ArrayList<BoardVo>();
 		
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		cCount = cCount * 5 - 5;
 		
 		try {
 			connection = getConnection();
@@ -98,9 +164,11 @@ public class BoardDao {
 			String sql = "select b.no, b.title, b.contents, b.hit, date_format(b.reg_date,'%Y-%m-%d %h:%i:%s') as reg_date, b.g_no, o_no, b.depth, b.user_no, u.name, b.state" + 
 						 " from board b, user u" + 
 						 " where b.user_no = u.no" +
-						 " order by g_no desc";
+						 " order by g_no desc, o_no asc" +
+						 " limit ?, 5";
 			pstmt = connection.prepareStatement(sql);
-			
+			pstmt.setInt(1, cCount);
+			//pstmt.setInt(2, cCount);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
@@ -152,12 +220,13 @@ public class BoardDao {
 		return result;
 	}
 	
-	public List<BoardVo> getList(String search) {
+	public List<BoardVo> getList(int cCount, String search) {
 		List<BoardVo> result = new ArrayList<BoardVo>();
 		
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		cCount = cCount * 5 - 5;
 		
 		try {
 			connection = getConnection();
@@ -167,10 +236,12 @@ public class BoardDao {
 						 " where b.user_no = u.no" +
 						 " and b.title like ?" +
 						 " and (b.state = 'y' or b.state = 'u')" +
-						 " order by g_no desc";
+						 " order by g_no desc, o_no asc" +
+						 " limit ?, 5";
 			
 			pstmt = connection.prepareStatement(sql);
 			pstmt.setString(1, "%" + search + "%");
+			pstmt.setInt(2, cCount);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
@@ -231,8 +302,8 @@ public class BoardDao {
 		
 		try {
 			connection = getConnection();
-			
-			String sql = "select no ,title, contents" + 
+	
+			String sql = "select no ,title, contents, g_no, o_no, depth" + 
 						 " from board" + 
 						 " where no = ?";
 			pstmt = connection.prepareStatement(sql);
@@ -244,11 +315,17 @@ public class BoardDao {
 				Long no         = rs.getLong(1);
 				String title    = rs.getString(2);
 				String contents = rs.getString(3);
-		
+				Long g_no = rs.getLong(4);
+				Long o_no = rs.getLong(5);
+				Long depth = rs.getLong(6);
+				
 				result = new BoardVo();
 				result.setNo(no);
 				result.setTitle(title);
 				result.setContents(contents);
+				result.setG_no(g_no);
+				result.setO_no(o_no);
+				result.setDepth(depth);
 
 			}
 		} catch (SQLException e) {

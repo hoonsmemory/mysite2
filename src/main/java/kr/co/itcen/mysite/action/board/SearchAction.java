@@ -26,9 +26,31 @@ public class SearchAction implements Action {
 			request.setAttribute("user", "logO");
 			request.setAttribute("userNo", authUser.getNo());
 		}
-		
 		String text = request.getParameter("text");
-		List<BoardVo> list = new BoardDao().getList(text);
+		
+		//페이징 처리===============================================================
+		int cCount = 0;
+		if(request.getParameter("cCount") == null || cCount < 0) {
+			cCount = 1;
+		} else {
+			cCount = Integer.parseInt(request.getParameter("cCount"));
+		}
+
+		Paging p = new Paging();
+		int pageCountAll = new Paging().makeLastPageNum(text);		
+		System.out.println(cCount);
+		p.makeBlock(cCount);
+		int blockStartNum = p.getBlockStartNum();
+		int blockLastNum = p.getBlockLastNum();
+        
+		request.setAttribute("startnum", blockStartNum);
+		request.setAttribute("lastnum", blockLastNum);
+		request.setAttribute("page", pageCountAll);
+		request.setAttribute("cCount", cCount);
+		// =====================================================================
+				
+
+		List<BoardVo> list = new BoardDao().getList(cCount,text);
 		request.setAttribute("list", list);
 		
 		WebUtils.forward(request, response, "WEB-INF/views/board/listform.jsp");

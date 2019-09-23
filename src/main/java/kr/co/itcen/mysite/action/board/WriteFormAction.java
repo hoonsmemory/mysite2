@@ -16,6 +16,7 @@ public class WriteFormAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
+		request.setAttribute("write", "write");
 		
 		WebUtils.forward(request, response, "WEB-INF/views/board/writeform.jsp");
 	}

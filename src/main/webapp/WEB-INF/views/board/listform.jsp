@@ -27,12 +27,17 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>
-					<c:forEach items ='${list}' var = 'vo' varStatus = 'status'>				
+					<c:forEach items ='${list}' var = 'vo' varStatus = 'status'>			
 					<tr>
 						<td>${status.count }</td>
 						<c:choose>
 							<c:when test="${vo.state eq 'y'}">
+							<c:if test="${vo.o_no > 1 }">
+							<td style ='padding-left:${50*vo.depth}px'><img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'><a href="${pageContext.servletContext.contextPath }/board?a=viewform&titleNo=${vo.no }&boardUserNo=${vo.user_no}">[새글] ${vo.title }</a></td>
+							</c:if>
+							<c:if test="${vo.o_no eq 1 }">
 							<td><a href="${pageContext.servletContext.contextPath }/board?a=viewform&titleNo=${vo.no }&boardUserNo=${vo.user_no}">[새글] ${vo.title }</a></td>	
+							</c:if>
 							<td >${vo.user_name }</td>
 							<td>${vo.hit }</td>
 							<td>${vo.reg_date }</td>
@@ -41,7 +46,12 @@
 							</c:if>
 							</c:when>
 							<c:when test="${vo.state eq 'u'}">
-							<td style ='padding-left:${50*1 }px'><a href="${pageContext.servletContext.contextPath }/board?a=viewform&titleNo=${vo.no }&boardUserNo=${vo.user_no}">[수정] ${vo.title }</a></td>
+							<c:if test="${vo.o_no > 1 }">
+							<td style ='padding-left:${50*vo.depth}px'><img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'><a href="${pageContext.servletContext.contextPath }/board?a=viewform&titleNo=${vo.no }&boardUserNo=${vo.user_no}">[새글] ${vo.title }</a></td>
+							</c:if>
+							<c:if test="${vo.o_no eq 1 }">
+							<td><a href="${pageContext.servletContext.contextPath }/board?a=viewform&titleNo=${vo.no }&boardUserNo=${vo.user_no}">[새글] ${vo.title }</a></td>	
+							</c:if>							
 							<td >${vo.user_name }</td>
 							<td>${vo.hit }</td>
 							<td>${vo.reg_date }</td>
@@ -64,14 +74,30 @@
 				
 				<!-- pager 추가 -->
 				<div class="pager">
+
 					<ul>
-						<li><a href="">◀</a></li>
-						<li class="selected">1</li>
-						<li><a href="">2</a></li>
-						<li><a href="">3</a></li>
-						<li>4</li>
-						<li>5</li>
-						<li><a href="">▶</a></li>
+						<c:if test="${cCount < 5 }">
+						<li><a href="${pageContext.servletContext.contextPath }/board?a=default&cCount=${cCount = cCount }">◀</a></li>
+						</c:if>
+						<c:if test="${cCount > 5 }">
+						<li><a href="${pageContext.servletContext.contextPath }/board?a=default&cCount=${startnum - 1 }">◀</a></li>
+						</c:if>
+						<c:forEach var="i" begin="${startnum }" end="${lastnum }">
+						<c:choose>
+					    <c:when test="${page >= i}">
+					    	<c:if test="${cCount eq i }">
+					    		<li class="selected"><a href="${pageContext.servletContext.contextPath }/board?a=default&cCount=${i }">${i }</a></li>
+					    	</c:if>
+					        <c:if test="${cCount ne i }">
+					       		<li><a href="${pageContext.servletContext.contextPath }/board?a=default&cCount=${i }">${i }</a></li>
+					        </c:if>
+					    </c:when>
+					    <c:otherwise>
+					    	<li>${i }</li>
+					    </c:otherwise>
+						</c:choose>
+						</c:forEach>
+						<li><a href="${pageContext.servletContext.contextPath }/board?a=default&cCount=${lastnum + 1 }">▶</a></li>
 					</ul>
 				</div>					
 				<!-- pager 추가 -->
