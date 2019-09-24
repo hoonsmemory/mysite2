@@ -161,32 +161,29 @@ public class BoardDao {
 		try {
 			connection = getConnection();
 			
-			String sql = "select @ROWNUM := @ROWNUM + 1 AS rownum, b.no, b.title, b.contents, b.hit, date_format(b.reg_date,'%Y-%m-%d %h:%i:%s') as reg_date, b.g_no, o_no, b.depth, b.user_no, u.name, b.state" + 
-						 " from board b, user u, (SELECT @ROWNUM:=0) R" + 
+			String sql = "select b.no, b.title, b.contents, b.hit, date_format(b.reg_date,'%Y-%m-%d %h:%i:%s') as reg_date, b.g_no, o_no, b.depth, b.user_no, u.name, b.state" + 
+						 " from board b, user u" + 
 						 " where b.user_no = u.no" +
 						 " order by g_no desc, o_no asc" +
 						 " limit ?, 5";
 			pstmt = connection.prepareStatement(sql);
 			pstmt.setInt(1, cCount);
-
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
-				Long ruwnum    = rs.getLong(1);
-				Long no         = rs.getLong(2);
-				String title    = rs.getString(3);
-				String contents = rs.getString(4);
-				Long hit        = rs.getLong(5);
-				String reg_date = rs.getString(6);
-				Long g_no       = rs.getLong(7);
-				Long o_no       = rs.getLong(8);
-				Long depth      = rs.getLong(9);
-				Long user_no    = rs.getLong(10);
-				String user_name = rs.getString(11);
-				String state = rs.getString(12);
+				Long no         = rs.getLong(1);
+				String title    = rs.getString(2);
+				String contents = rs.getString(3);
+				Long hit        = rs.getLong(4);
+				String reg_date = rs.getString(5);
+				Long g_no       = rs.getLong(6);
+				Long o_no       = rs.getLong(7);
+				Long depth      = rs.getLong(8);
+				Long user_no    = rs.getLong(9);
+				String user_name = rs.getString(10);
+				String state = rs.getString(11);
 				
 				BoardVo vo= new BoardVo();
-				vo.setRownum(ruwnum);
 				vo.setNo(no);
 				vo.setTitle(title);
 				vo.setContents(contents);
@@ -233,8 +230,8 @@ public class BoardDao {
 		try {
 			connection = getConnection();
 			
-			String sql = "select select @ROWNUM := @ROWNUM + 1 AS rownum, b.no, b.title, b.contents, b.hit, date_format(b.reg_date,'%Y-%m-%d %h:%i:%s') as reg_date, b.g_no, o_no, b.depth, b.user_no, u.name, b.state" + 
-						 " from board b, user u, (SELECT @ROWNUM:=0) R" + 
+			String sql = "select b.no, b.title, b.contents, b.hit, date_format(b.reg_date,'%Y-%m-%d %h:%i:%s') as reg_date, b.g_no, o_no, b.depth, b.user_no, u.name, b.state" + 
+						 " from board b, user u" + 
 						 " where b.user_no = u.no" +
 						 " and b.title like ?" +
 						 " and (b.state = 'y' or b.state = 'u')" +
@@ -247,21 +244,19 @@ public class BoardDao {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
-				Long ruwnum    = rs.getLong(1);
-				Long no         = rs.getLong(2);
-				String title    = rs.getString(3);
-				String contents = rs.getString(4);
-				Long hit        = rs.getLong(5);
-				String reg_date = rs.getString(6);
-				Long g_no       = rs.getLong(7);
-				Long o_no       = rs.getLong(8);
-				Long depth      = rs.getLong(9);
-				Long user_no    = rs.getLong(10);
-				String user_name = rs.getString(11);
-				String state = rs.getString(12);
+				Long no         = rs.getLong(1);
+				String title    = rs.getString(2);
+				String contents = rs.getString(3);
+				Long hit        = rs.getLong(4);
+				String reg_date = rs.getString(5);
+				Long g_no       = rs.getLong(6);
+				Long o_no       = rs.getLong(7);
+				Long depth      = rs.getLong(8);
+				Long user_no    = rs.getLong(9);
+				String user_name = rs.getString(10);
+				String state = rs.getString(11);
 				
 				BoardVo vo= new BoardVo();
-				vo.setRownum(ruwnum);
 				vo.setNo(no);
 				vo.setTitle(title);
 				vo.setContents(contents);
