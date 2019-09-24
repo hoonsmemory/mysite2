@@ -41,8 +41,7 @@ public class ListFormAction implements Action {
 		p.makeBlock(cCount);
 		request.setAttribute("p", p);
 		request.setAttribute("cCount", cCount);
-		
-		System.out.println(p.getTotalCount());
+
 		// =====================================================================
 			
 		List<BoardVo> list = new BoardDao().getList(cCount);
