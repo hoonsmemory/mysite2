@@ -101,23 +101,20 @@
 					<ul>
 						<c:if test="${cCount <= 5 }">
 							<li><a
-								href="${pageContext.servletContext.contextPath }/board?a=${what }&cCount=${cCount = cCount }&text=${text = text}">◀</a></li>
+								href="${pageContext.servletContext.contextPath }/board?a=${what }&cCount=${cCount = cCount }&text=${text = text}"></a></li>
 						</c:if>
 						<c:if test="${cCount > 5 }">
 							<li><a
 								href="${pageContext.servletContext.contextPath }/board?a=${what }&cCount=${p.blockStartNum - 1 }&text=${text = text}">◀</a></li>
 						</c:if>
-						<c:forEach var="i" begin="${p.blockStartNum }"
-							end="${p.blockLastNum }">
+						<c:forEach var="i" begin="${p.blockStartNum }" end="${p.blockLastNum }">
 							<c:choose>
 								<c:when test="${p.lastPageNum >= i}">
 									<c:if test="${cCount eq i }">
-										<li class="selected"><a
-											href="${pageContext.servletContext.contextPath }/board?a=${what }&cCount=${i }&text=${text = text}">${i }</a></li>
+										<li class="selected"><a href="${pageContext.servletContext.contextPath }/board?a=${what }&cCount=${i }&text=${text = text}">${i }</a></li>
 									</c:if>
 									<c:if test="${cCount ne i }">
-										<li><a
-											href="${pageContext.servletContext.contextPath }/board?a=${what }&cCount=${i }&text=${text = text}">${i }</a></li>
+										<li><a href="${pageContext.servletContext.contextPath }/board?a=${what }&cCount=${i }&text=${text = text}">${i }</a></li>
 									</c:if>
 								</c:when>
 								<c:otherwise>
@@ -125,8 +122,9 @@
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
-						<li><a
-							href="${pageContext.servletContext.contextPath }/board?a=${what }&cCount=${p.blockLastNum + 1 }&text=${text = text}">▶</a></li>
+						<c:if test="${p.lastPageNum > p.blockLastNum }">
+						<li><a href="${pageContext.servletContext.contextPath }/board?a=${what }&cCount=${p.blockLastNum + 1 }&text=${text = text}">▶</a></li>
+						</c:if>
 					</ul>
 
 				</div>
