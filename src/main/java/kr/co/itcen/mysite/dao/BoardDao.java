@@ -168,7 +168,7 @@ public class BoardDao {
 						 " limit ?, 5";
 			pstmt = connection.prepareStatement(sql);
 			pstmt.setInt(1, cCount);
-			//pstmt.setInt(2, cCount);
+
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){

@@ -37,22 +37,18 @@ public class SearchAction implements Action {
 		}
 
 		Paging p = new Paging();
-		int pageCountAll = new Paging().makeLastPageNum(text);		
+		p.makeLastPageNum(text);
 		System.out.println(cCount);
 		p.makeBlock(cCount);
-		int blockStartNum = p.getBlockStartNum();
-		int blockLastNum = p.getBlockLastNum();
-        
-		request.setAttribute("startnum", blockStartNum);
-		request.setAttribute("lastnum", blockLastNum);
-		request.setAttribute("page", pageCountAll);
+		request.setAttribute("p", p);
 		request.setAttribute("cCount", cCount);
 		// =====================================================================
 				
-
-		List<BoardVo> list = new BoardDao().getList(cCount,text);
+		System.out.println(text);
+		List<BoardVo> list = new BoardDao().getList(cCount, text);
 		request.setAttribute("list", list);
-		
+		request.setAttribute("what", "search");
+		request.setAttribute("text", request.getParameter("text"));
 		WebUtils.forward(request, response, "WEB-INF/views/board/listform.jsp");
 	}
 

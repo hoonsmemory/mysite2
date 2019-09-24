@@ -37,22 +37,16 @@ public class ListFormAction implements Action {
 		}
 
 		Paging p = new Paging();
-		int pageCountAll = new Paging().makeLastPageNum();		
+		p.makeLastPageNum();
 		System.out.println(cCount);
 		p.makeBlock(cCount);
-		int blockStartNum = p.getBlockStartNum();
-		int blockLastNum = p.getBlockLastNum();
-        
-		request.setAttribute("startnum", blockStartNum);
-		request.setAttribute("lastnum", blockLastNum);
-		request.setAttribute("page", pageCountAll);
+		request.setAttribute("p", p);
 		request.setAttribute("cCount", cCount);
 		// =====================================================================
 			
 		List<BoardVo> list = new BoardDao().getList(cCount);
-		request.setAttribute("list", list);
-		
-		
+		request.setAttribute("list", list);	
+		request.setAttribute("what", "list");
 		WebUtils.forward(request, response, "WEB-INF/views/board/listform.jsp");
 	}
 
