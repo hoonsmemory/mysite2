@@ -10,9 +10,9 @@ public class BoardVo {
 	private Long o_no;
 	private Long depth;
 	private Long user_no;
-	private String state;
-	
+	private String state;	
 	private String user_name;
+	private Long rownum;
 	
 	public Long getNo() {
 		return no;
@@ -81,12 +81,20 @@ public class BoardVo {
 		this.state = state;
 	}
 	
+	public Long getRownum() {
+		return rownum;
+	}
+	public void setRownum(Long rownum) {
+		this.rownum = rownum;
+	}
+	
 	@Override
 	public String toString() {
 		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", hit=" + hit + ", reg_date="
 				+ reg_date + ", g_no=" + g_no + ", o_no=" + o_no + ", depth=" + depth + ", user_no=" + user_no
 				+ ", state=" + state + ", user_name=" + user_name + "]";
 	}
+
 	
 
 }

@@ -39,7 +39,7 @@
 					</tr>
 					<c:forEach items='${list}' var='vo' varStatus='status'>
 						<tr>
-							<td>${status.count }</td>
+							<td>${vo.rownum }</td>
 							<c:choose>
 								<c:when test="${vo.state eq 'y'}">
 									<c:if test="${vo.o_no > 1 }">

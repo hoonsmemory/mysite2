@@ -7,7 +7,8 @@ public class Paging {
     private int blockStartNum = 0;
     private int blockLastNum = 0;
     private int lastPageNum = 0;
-
+    private Long totalCount = 0L;
+     
     public int getBlockStartNum() {
         return blockStartNum;
     }
@@ -26,8 +27,19 @@ public class Paging {
     public void setLastPageNum(int lastPageNum) {
         this.lastPageNum = lastPageNum;
     }
-
-    // block을 생성
+     
+    public Long getTotalCount() {
+		return totalCount;
+	}
+    
+	public void setTotalCount(Long totalCount) {
+		this.totalCount = totalCount;
+	}
+	
+	public static int getPagecount() {
+		return pageCount;
+	}
+	// block을 생성
     // 현재 페이지가 속한 block의 시작 번호, 끝 번호를 계산
     public void makeBlock(int curPage){
         int blockNum = 0;
@@ -40,26 +52,26 @@ public class Paging {
     // 총 페이지의 마지막 번호
     public int makeLastPageNum() {
     	BoardDao dao = new BoardDao();
-    	Long total = dao.getCount();
+    	totalCount = dao.getCount();
 
-        if( total % pageCount == 0 ) {
-            return lastPageNum = (int)Math.floor(total/pageCount);
+        if( totalCount % pageCount == 0 ) {
+            return lastPageNum = (int)Math.floor(totalCount/pageCount);
         }
         else {
-        	return lastPageNum = (int)Math.floor(total/pageCount) + 1;
+        	return lastPageNum = (int)Math.floor(totalCount/pageCount) + 1;
         }
     }
 
     // 검색을 했을 때 총 페이지의 마지막 번호
     public int makeLastPageNum(String kwd) {
     	BoardDao dao = new BoardDao();
-        Long total = dao.getCount(kwd);
+    	totalCount = dao.getCount(kwd);
 
-        if( total % pageCount == 0 ) {
-            return lastPageNum = (int)Math.floor(total/pageCount);
+        if( totalCount % pageCount == 0 ) {
+            return lastPageNum = (int)Math.floor(totalCount/pageCount);
         }
         else {
-        	return lastPageNum = (int)Math.floor(total/pageCount) + 1;
+        	return lastPageNum = (int)Math.floor(totalCount/pageCount) + 1;
         }
     }
 }
