@@ -44,8 +44,8 @@ public class BoardReplyAction implements Action {
 		
 		new BoardDao().boardReply(vo);
 		
-		WebUtils.redirect(request, response, request.getContextPath());
-		//WebUtils.forward(request, response, "WEB-INF/views/board/writeform.jsp");
+
+		WebUtils.redirect(request, response, request.getContextPath() + "/board");
 
 	}
 
